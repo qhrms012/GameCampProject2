@@ -11,6 +11,11 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     float speed;
+    [SerializeField]
+    Transform firePoint;
+    [SerializeField]
+    float fireRate = 0.3f;
+    float timer;
 
     private Vector2 playerVector;
 
@@ -22,6 +27,21 @@ public class Player : MonoBehaviour
         bx = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
 
+    }
+
+    private void Update()
+    {
+        timer += Time.deltaTime;
+        if(timer >= fireRate)
+        {
+            AutoFire();
+            timer = 0;
+        }
+    }
+    private void AutoFire()
+    {
+        GameObject bullet = PoolManager.Instance.Get(PoolType.PlayerBullet);
+        bullet.transform.position = firePoint.position;
     }
     private void FixedUpdate()
     {
