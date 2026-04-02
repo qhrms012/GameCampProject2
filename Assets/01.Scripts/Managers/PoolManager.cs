@@ -14,57 +14,74 @@ public class PoolManager : Singleton<PoolManager>
     public PoolData[] poolDatas;
 
     Dictionary<PoolType, List<GameObject>> pools = new Dictionary<PoolType, List<GameObject>>();
+    Dictionary<PoolType, GameObject> prefabDict = new Dictionary<PoolType, GameObject>();
 
     private void Awake()
     {
-
         base.Awake();
 
         foreach (var data in poolDatas)
+        {
+
+            if (pools.ContainsKey(data.type))
+            {
+                Debug.LogError($"중복된 PoolType: {data.type}");
+                continue;
+            }
+
             pools[data.type] = new List<GameObject>();
+            prefabDict[data.type] = data.prefab;
+        }
     }
-    private void OnEnable()
-    {
-        
-    }
+
     public GameObject Get(PoolType type)
     {
+
+        if (!pools.ContainsKey(type))
+        {
+            Debug.LogError($"Pool 타입 없음: {type}");
+            return null;
+        }
+
         List<GameObject> pool = pools[type];
-        GameObject select = null;
+
 
         foreach (GameObject item in pool)
         {
-            if (!pools.ContainsKey(type))
-            {
-                Debug.LogError($"Pool 타입 없음: {type}");
-                return null;
-            }
             if (!item.activeSelf)
             {
-                select = item;
-                select.SetActive(true);
-                break;
+                item.SetActive(true);
+                return item;
             }
         }
-        if (select == null)
+        GameObject prefab = GetPrefab(type);
+        if (prefab == null) return null;
+
+        GameObject obj = Instantiate(prefab, transform);
+
+
+        PoolObject poolObj = obj.GetComponent<PoolObject>();
+        if (poolObj != null && poolObj.poolType != type)
         {
-            GameObject prefab = GetPrefab(type);
-            select = Instantiate(prefab, transform);
-            pool.Add(select);
+            Debug.LogError($"타입 불일치! 요청:{type}, 프리팹:{poolObj.poolType}");
         }
-        return select;
+
+        pool.Add(obj);
+        return obj;
     }
+
     public void Return(GameObject obj)
     {
+        if (obj == null) return;
+
         obj.SetActive(false);
     }
 
     GameObject GetPrefab(PoolType type)
     {
-        foreach (var data in poolDatas)
+        if (prefabDict.TryGetValue(type, out GameObject prefab))
         {
-            if (data.type == type)
-                return data.prefab;
+            return prefab;
         }
 
         Debug.LogError($"프리팹 타입이 없음: {type}");

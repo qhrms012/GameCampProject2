@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3825277575700198326}
   - component: {fileID: 1917735458252986707}
   - component: {fileID: 2281491249033314676}
+  - component: {fileID: 5012857096206740215}
   - component: {fileID: -3892282404277604366}
   - component: {fileID: 7709391925572419248}
   m_Layer: 0
@@ -107,6 +108,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PoolObject
   poolType: 0
+--- !u!114 &5012857096206740215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2541269549473120967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e72d300db5378e44a53ae0461730519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Bullet
+  speed: 3
+  damage: 10
 --- !u!50 &-3892282404277604366
 Rigidbody2D:
   serializedVersion: 5
