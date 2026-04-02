@@ -11,27 +11,22 @@ public enum PoolType
 
 public class PoolManager : Singleton<PoolManager>
 {
+    public PoolData[] poolDatas;
 
-    public GameObject[] preFabs;
-
-    List<GameObject>[] pools;
+    Dictionary<PoolType, List<GameObject>> pools = new Dictionary<PoolType, List<GameObject>>();
 
     private void Awake()
     {
-        pools = new List<GameObject>[preFabs.Length];
-
-        for (int i = 0; i < pools.Length; i++)
-        {
-            pools[i] = new List<GameObject>();
-        }
+        foreach (var data in poolDatas)
+            pools[data.type] = new List<GameObject>();
     }
 
     public GameObject Get(PoolType type)
     {
-        int index = (int)type;
+        List<GameObject> pool = pools[type];
         GameObject select = null;
 
-        foreach (GameObject item in pools[index])
+        foreach (GameObject item in pool)
         {
             if (!item.activeSelf)
             {
@@ -40,19 +35,29 @@ public class PoolManager : Singleton<PoolManager>
                 break;
             }
         }
-
         if (select == null)
         {
-            select = Instantiate(preFabs[index], transform);
-            pools[index].Add(select);
+            GameObject prefab = GetPrefab(type);
+            select = Instantiate(prefab, transform);
+            pool.Add(select);
         }
-
         return select;
     }
-
     public void Return(GameObject obj)
     {
         obj.SetActive(false);
+    }
+
+    GameObject GetPrefab(PoolType type)
+    {
+        foreach (var data in poolDatas)
+        {
+            if (data.type == type)
+                return data.prefab;
+        }
+
+        Debug.LogError($"프리팹 타입이 없음: {type}");
+        return null;
     }
 }
 
