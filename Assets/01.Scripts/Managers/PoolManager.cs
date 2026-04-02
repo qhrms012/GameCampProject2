@@ -17,10 +17,16 @@ public class PoolManager : Singleton<PoolManager>
 
     private void Awake()
     {
+
+        base.Awake();
+
         foreach (var data in poolDatas)
             pools[data.type] = new List<GameObject>();
     }
-
+    private void OnEnable()
+    {
+        
+    }
     public GameObject Get(PoolType type)
     {
         List<GameObject> pool = pools[type];
@@ -28,6 +34,11 @@ public class PoolManager : Singleton<PoolManager>
 
         foreach (GameObject item in pool)
         {
+            if (!pools.ContainsKey(type))
+            {
+                Debug.LogError($"Pool 타입 없음: {type}");
+                return null;
+            }
             if (!item.activeSelf)
             {
                 select = item;

@@ -2,15 +2,22 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField]
+    float speed;
+    [SerializeField]
+    int damage;
+
+    private void Update()
     {
-        
+        transform.Translate(Vector2.up * speed * Time.deltaTime);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.CompareTag("Enemy"))
+        {
+            //collision.GetComponent<Enemy>().TakeDamage(damage);
+            PoolManager.Instance.Return(gameObject);
+        }
     }
 }
