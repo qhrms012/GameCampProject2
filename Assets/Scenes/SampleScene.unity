@@ -607,6 +607,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   speed: 3
+  firePoint: {fileID: 1223425359}
+  fireRate: 0.3
 --- !u!1 &1237278602
 GameObject:
   m_ObjectHideFlags: 0
