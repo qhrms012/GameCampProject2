@@ -524,19 +524,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7d80e1404c5d08468b1d0d4c7e757a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
-  spawnRate: 1
-  bodyCount: 10
-  waypoints:
-  - {fileID: 220307592}
-  - {fileID: 1742002890}
-  - {fileID: 1906219239}
-  - {fileID: 530348552}
-  - {fileID: 1712423390}
-  - {fileID: 1440243869}
-  - {fileID: 1229255968}
-  - {fileID: 523033372}
-  - {fileID: 431311340}
-  - {fileID: 295810088}
 --- !u!4 &683537173
 Transform:
   m_ObjectHideFlags: 0
@@ -1211,6 +1198,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62af63f1d727b374ca7f68a1285f8889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  spawnRate: 1
+  bodyCount: 0
+  waypoints:
+  - {fileID: 220307592}
+  - {fileID: 1742002890}
+  - {fileID: 1906219239}
+  - {fileID: 530348552}
+  - {fileID: 1712423390}
+  - {fileID: 1440243869}
+  - {fileID: 1229255968}
+  - {fileID: 523033372}
+  - {fileID: 431311340}
+  - {fileID: 295810088}
 --- !u!1 &1906219238
 GameObject:
   m_ObjectHideFlags: 0

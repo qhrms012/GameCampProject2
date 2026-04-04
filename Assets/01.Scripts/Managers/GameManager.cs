@@ -3,11 +3,8 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-
-
     [SerializeField]
     float spawnRate = 1f;
-    float timer;
     [SerializeField]
     int bodyCount;
 
@@ -15,10 +12,6 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     Transform[] waypoints;
 
-    private void Awake()
-    {
-
-    }
     private void Start()
     {
         SpawnEnemy();
