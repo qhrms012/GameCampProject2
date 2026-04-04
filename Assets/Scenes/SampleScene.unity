@@ -525,7 +525,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySpawner
   spawnRate: 1
-  bodyCount: 0
+  bodyCount: 10
   waypoints:
   - {fileID: 220307592}
   - {fileID: 1742002890}
