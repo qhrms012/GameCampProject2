@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -15,6 +16,9 @@ public class Enemy : MonoBehaviour
     Sprite bodySprite;
 
     SpriteRenderer sr;
+    Color originalColor;
+
+    Vector3 originalScale;
 
     [SerializeField]
     float speed;
@@ -40,6 +44,10 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
+
+        originalScale = transform.localScale;
+
+        originalColor = sr.color;
     }
 
     private void OnEnable()
@@ -54,6 +62,17 @@ public class Enemy : MonoBehaviour
     private void Update()
     {
         Move();
+        AnimateScale();
+    }
+
+    private void AnimateScale()
+    {
+        float speed = isBody ? 0.1f : 0.5f;
+        float amount = isBody ? 0.05f : 0.1f;
+
+
+        float scale = 1 + Mathf.PingPong(Time.time * speed, amount);
+        transform.localScale = originalScale * scale;
     }
 
     void Move()
@@ -174,9 +193,20 @@ public class Enemy : MonoBehaviour
 
         UpdateSprite();
     }
+
+    IEnumerator HitEffect()
+    {
+        sr.color = Color.red;
+
+        yield return new WaitForSeconds(0.1f);
+
+        sr.color = originalColor;
+    }
     public void TakeDamage(int damage)
     {
         curHp -= damage;
+
+        StartCoroutine(HitEffect());
 
         if(curHp <= 0)
             Die();
