@@ -23,6 +23,16 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     float speed;
     [SerializeField]
+    float normalSpeed;
+    [SerializeField]
+    float boostSpeed;
+    [SerializeField]
+    float boostDuration;
+
+    Coroutine boostCoroutine;
+
+
+    [SerializeField]
     int curHp;
     [SerializeField]
     int maxHp;
@@ -110,11 +120,40 @@ public class Enemy : MonoBehaviour
         {
             currentIndex++;
 
+            StartSpeedBoost();
+
             if (currentIndex >= waypoints.Length)
             {
                 PoolManager.Instance.Return(gameObject);
             }
         }
+    }
+
+    private void StartSpeedBoost()
+    {
+        if (SpeedBoost() != null)
+        {
+            StopCoroutine(SpeedBoost());
+        }
+
+        StartCoroutine(SpeedBoost());
+    }
+
+    IEnumerator SpeedBoost()
+    {
+        speed = boostSpeed;
+
+        transform.localScale *= 1.2f;
+        sr.color = Color.hotPink;
+
+        yield return new WaitForSeconds(boostDuration);
+
+        speed = normalSpeed;
+
+        transform.localScale /= 1.2f;
+        sr.color = originalColor;
+
+
     }
 
     private void UpdateSprite()
