@@ -108,6 +108,14 @@ public class Enemy : MonoBehaviour
         if (waypoints == null || waypoints.Length == 0)
             return;
 
+        //  체크
+        if (currentIndex >= waypoints.Length)
+        {
+            UIManager.Instance.GameOver();
+            //PoolManager.Instance.Return(gameObject);
+            return;
+        }
+
         Transform waypointTarget = waypoints[currentIndex];
 
         transform.position = Vector2.MoveTowards(
@@ -121,11 +129,6 @@ public class Enemy : MonoBehaviour
             currentIndex++;
 
             StartSpeedBoost();
-
-            if (currentIndex >= waypoints.Length)
-            {
-                PoolManager.Instance.Return(gameObject);
-            }
         }
     }
 
@@ -190,6 +193,7 @@ public class Enemy : MonoBehaviour
 
     private void Die()
     {
+        GameManager.Instance.OnBodyDead();
         if (isBody)
         {
             // 앞뒤 연결 복구
@@ -208,6 +212,7 @@ public class Enemy : MonoBehaviour
             }
 
             PoolManager.Instance.Return(gameObject);
+
             return;
         }
 
@@ -250,4 +255,11 @@ public class Enemy : MonoBehaviour
         if(curHp <= 0)
             Die();
     }
+
+    public void ForceReachEnd()
+    {
+        transform.position = waypoints[waypoints.Length - 1].position;
+        currentIndex = waypoints.Length;
+    }
+
 }

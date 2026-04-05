@@ -201,7 +201,7 @@ MonoBehaviour:
   normalSpeed: 1
   boostSpeed: 2
   boostDuration: 1
-  curHp: 0
+  curHp: 100
   maxHp: 100
   isBody: 0
   waypoints: []

@@ -8,9 +8,14 @@ public class GameManager : Singleton<GameManager>
     [SerializeField]
     int bodyCount;
 
+    [SerializeField]
+    int currentBodyCount;
 
     [SerializeField]
     Transform[] waypoints;
+
+    Enemy currentHead;
+
 
     private void Start()
     {
@@ -24,8 +29,10 @@ public class GameManager : Singleton<GameManager>
 
     IEnumerator SpawnChain()
     {
-
+        currentBodyCount = bodyCount + 1;
         Enemy head = PoolManager.Instance.Get(PoolType.EnemyHead).GetComponent<Enemy>();
+        currentHead = head;
+
         head.transform.position = waypoints[0].position;
         head.SetPath(waypoints);
 
@@ -44,4 +51,21 @@ public class GameManager : Singleton<GameManager>
             prev = body;
         }
     }
+
+    public void OnBodyDead()
+    {
+        currentBodyCount--;
+
+        if (currentBodyCount <= 0)
+        {
+            UIManager.Instance.GameClear();
+        }
+    }
+
+    public void TestLose()
+    {
+        currentHead.ForceReachEnd();
+    }
+
 }
+
