@@ -4344,7 +4344,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   spawnRate: 1
-  bodyCount: 2
+  bodyCount: 10
   currentBodyCount: 0
   waypoints:
   - {fileID: 220307592}
