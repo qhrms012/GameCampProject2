@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -20,6 +21,7 @@ public class GameManager : Singleton<GameManager>
     private void Start()
     {
         SpawnEnemy();
+        AudioManager.Instance.PlayBgm(Bgm.Main,true);
     }
 
     public void SpawnEnemy()
@@ -67,5 +69,24 @@ public class GameManager : Singleton<GameManager>
         currentHead.ForceReachEnd();
     }
 
+    public void Stop()
+    {
+        Time.timeScale = 0;
+    }
+    public void Resume()
+    {
+        Time.timeScale = 1f;
+    }
+
+    public void Retry()
+    {
+        SceneManager.LoadScene("MainScene");
+        Time.timeScale = 1f;
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
+    }
 }
 

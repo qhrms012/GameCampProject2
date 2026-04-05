@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             collision.GetComponent<Enemy>().TakeDamage(damage);
+            AudioManager.Instance.PlaySfx(Sfx.Hit);
             PoolManager.Instance.Return(gameObject);
         }
     }

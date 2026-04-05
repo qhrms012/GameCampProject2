@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
     private void AutoFire()
     {
         GameObject bullet = PoolManager.Instance.Get(PoolType.PlayerBullet);
+        AudioManager.Instance.PlaySfx(Sfx.Shot);
         bullet.transform.position = firePoint.position;
     }
     private void FixedUpdate()
